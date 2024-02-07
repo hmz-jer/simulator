@@ -116,9 +116,9 @@ public class SimulatorApplication implements CommandLineRunner {
             int mid = (min + max) / 2;
             String jsonContent = dataGeneratorService.generateJsonStringWithPrefix(operation,mid);
             // Générer une paire de clés RSA
-            KeyPair keyPair = KeyManagementUtils.generateKeyPair();
+        //    KeyPair keyPair = KeyManagementUtils.generateKeyPair();
             // Signer et encrypter le contenu
-            String encrypted = jwsJweService.signAndEncrypt(jsonContent, keyPair);
+            String encrypted = jwsJweService.signAndEncrypt(jsonContent);
 
             boolean isTooLarge = jsonService.sendJsonAndCheckFor413(requestUrl, sslContext, encrypted, false);
 

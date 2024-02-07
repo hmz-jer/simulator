@@ -4,31 +4,40 @@ import org.example.DataGeneratorService;
 import org.example.JwsJweService;
 import org.example.KeyManagementUtils;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import static org.assertj.core.api.Fail.fail;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.springframework.test.util.AssertionErrors.assertEquals;
+
 import java.security.KeyPair;
 
 class JsonAndEncryptionTest {
 
+    @Autowired
+    private JwsJweService jwsJweService;
+
     @Test
-    void testJsonGenerationAndEncryption() throws Exception {
-        DataGeneratorService generator = new DataGeneratorService();
-        int recurrence = 5; // Exemple de récurrence
-        String argument = "tokenisation"; // Exemple d'argument
+    public void testSignAndEncrypt() {
+        String payload = "Hello, world!";
+        try {
+            String result = jwsJweService.signAndEncrypt(payload);
+            assertNotNull(result);
+            System.out.println("JWE Encrypted and Signed Result: " + result);
+            // Plus de logique de validation ici, par exemple décrypter/valider le JWE/JWS pour vérifier le contenu
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail("Le test a échoué à cause d'une exception : " + e.getMessage());
+        }
+    }
 
-        // Génération de la chaîne JSON avec préfixe
-        String content = generator.generateJsonStringWithPrefix(argument,recurrence);
+    @Test
+    public void testEncryptDecrypt() throws Exception {
+        String originalPayload = "Hello, world!";
+        String encryptedJwe = jwsJweService.signAndEncrypt(originalPayload);
+        assertNotNull(encryptedJwe);
 
-        System.out.println(content);
-        assertNotNull(content, "La chaîne générée ne devrait pas être null");
-
-        // Génération de la paire de clés pour le test
-        KeyPair keyPair = KeyManagementUtils.generateKeyPair(); // Simulez ou générez une vraie paire de clés pour le test
-
-        // Encryptage et signature (Assurez-vous d'avoir une implémentation mock ou réelle pour le test)
-        JwsJweService jwsJweService = new JwsJweService(); // Utilisez Mockito pour mocker cette dépendance si nécessaire
-        String encryptedSignedContent = jwsJweService.signAndEncrypt(content, keyPair);
-
-        // Vérifiez que le contenu retourné est encrypté et signé (selon ce que vous pouvez tester sans déchiffrer)
-        assertNotNull(encryptedSignedContent, "Le contenu encrypté et signé ne devrait pas être null");
+        String decryptedPayload = jwsJweService.decryptAndVerify(encryptedJwe);
+        assertEquals(originalPayload, decryptedPayload, "Le payload décrypté et vérifié doit correspondre au payload original.");
     }
 }

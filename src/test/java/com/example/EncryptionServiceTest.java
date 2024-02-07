@@ -25,7 +25,7 @@ public class EncryptionServiceTest {
         // Simuler l'appel au service d'encryptage
         KeyPair keyPair = KeyManagementUtils.generateKeyPair(); // Assurez-vous que SecurityUtils est bien défini
         JwsJweService jwsJweService = new JwsJweService(); // Initialisez correctement votre service
-        String encryptedContent = jwsJweService.signAndEncrypt("{\"name\":\"Test User\",\"age\":30}", keyPair);
+        String encryptedContent = jwsJweService.signAndEncrypt("{\"name\":\"Test User\",\"age\":30}");
 
         // Vérifier que le contenu encrypté n'est pas null
         assertNotNull(encryptedContent, "Le contenu encrypté ne devrait pas être null");
