@@ -1,0 +1,26 @@
+tokenisation
+{
+$  "CustMsgId" : "0123456789012345",
+   "CustCnxId" : "123456654321",
+  "OperationsList" : [ {
+(    "OperationId" : "YJGqnYA7RQXZ46vy",
+.    "SensitiveData" : "D0clc7zP9lVCYrocgq8X",
+    "SensitiveDataType" : "01"
+  }, {
+(    "OperationId" : "KML8jerPwiKwfiGl",
+.    "SensitiveData" : "Qzy8cKlDLK6HBOHUTTTP",
+    "SensitiveDataType" : "01"
+  }, {
+(    "OperationId" : "Q9rrTUO5DMKR3pMd",
+.    "SensitiveData" : "WlJHRnn9hhEqNCsJ2vVE",
+    "SensitiveDataType" : "01"
+  }, {
+(    "OperationId" : "pnSNuLwNRcM77HPt",
+.    "SensitiveData" : "zv40pTIFJzRuFKtum1sL",
+    "SensitiveDataType" : "01"
+  }, {
+(    "OperationId" : "XccXY67CkficTxxP",
+.    "SensitiveData" : "iZ0auGLFMy2RcU1utYnC",
+    "SensitiveDataType" : "01"
+  } ]
+}
