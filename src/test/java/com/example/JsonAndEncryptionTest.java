@@ -10,6 +10,11 @@ import static org.assertj.core.api.Fail.fail;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.test.util.AssertionErrors.assertEquals;
 
+import com.nimbusds.jose.*;
+import com.nimbusds.jose.crypto.RSAEncrypter;
+import java.security.interfaces.RSAPublicKey;
+
+
 import java.security.KeyPair;
 
 class JsonAndEncryptionTest {
@@ -39,5 +44,18 @@ class JsonAndEncryptionTest {
 
         String decryptedPayload = jwsJweService.decryptAndVerify(encryptedJwe);
         assertEquals(originalPayload, decryptedPayload, "Le payload décrypté et vérifié doit correspondre au payload original.");
+    }
+
+    public void testJWEEncryption() throws Exception {
+                  RSAPublicKey publicKey = // Charger la clé publique;
+
+                JWEObject jweObject = new JWEObject(
+                new JWEHeader.Builder(JWEAlgorithm.RSA_OAEP_256, EncryptionMethod.A128GCM).build(),
+                new Payload("Hello, World!"));
+
+        jweObject.encrypt(new RSAEncrypter(publicKey));
+
+        String serializedJWE = jweObject.serialize();
+        System.out.println("Serialized JWE: " + serializedJWE);
     }
 }
